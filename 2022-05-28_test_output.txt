@@ -1,0 +1,181 @@
+---- Initialising variables...
+       Total number of streaklets detected on this night: 26
+       Loading space-track catalogues
+         Found pre-existing catalog from Space-Track.org      2022-05-28--2022-05-29
+         Found pre-existing catalog from Space-Track.org      2022-05-27--2022-05-28
+         Found pre-existing catalog from Space-Track.org      2022-05-26--2022-05-27
+         Found pre-existing catalog from Space-Track.org      2022-05-25--2022-05-26
+         Found pre-existing catalog from Space-Track.org      2022-05-24--2022-05-25
+         Found pre-existing catalog from Space-Track.org      2022-05-23--2022-05-24
+         Found pre-existing catalog from Space-Track.org      2022-05-22--2022-05-23
+         Found pre-existing catalog from Space-Track.org      2022-05-21--2022-05-22
+         Found pre-existing catalog from Space-Track.org      2022-05-20--2022-05-21
+         Found pre-existing catalog from Space-Track.org      2022-05-19--2022-05-20
+         Found pre-existing catalog from Space-Track.org      2022-05-18--2022-05-19
+         Found pre-existing catalog from Space-Track.org      2022-05-17--2022-05-18
+         Found pre-existing catalog from Space-Track.org      2022-05-16--2022-05-17
+         Found pre-existing catalog from Space-Track.org      2022-05-15--2022-05-16
+         Found pre-existing catalog from Space-Track.org      2022-05-14--2022-05-15
+       Optimised the LEO TLE catalog from 733647 to 24022 objects
+---- Completed set-up --
+
+----  26 Identifications To-Do  ----
+
+Streaklet No. 1/26: 
+  File: 005_2022-05-29_001012_A_DSC_0597_streak_1.png 
+  Time: 2022-05-29 00:10:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  COSMOS 1365 (13175) -- with 66.5%
+
+Streaklet No. 2/26: 
+  File: 005_2022-05-29_001027_A_DSC_0598_streak_1.png 
+  Time: 2022-05-29 00:10:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  COSMOS 1365 (13175) -- with 66.3%
+
+Streaklet No. 3/26: 
+  File: 005_2022-05-29_002212_A_DSC_0645_streak_1.png 
+  Time: 2022-05-29 00:22:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  ICESAT-2 (43613) -- with 34.9%
+
+Streaklet No. 4/26: 
+  File: 005_2022-05-29_004312_A_DSC_0729_streak_1.png 
+  Time: 2022-05-29 00:43:12 UTC/BST-1
+    0 satellite(s) identified in image to test against
+ --- No satellites in image --- 
+
+Streaklet No. 5/26: 
+  File: 005_2022-05-29_004527_A_DSC_0738_streak_1.png 
+  Time: 2022-05-29 00:45:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-8 R/B (12443) -- with 67.9%
+
+Streaklet No. 6/26: 
+  File: 005_2022-05-29_004912_A_DSC_0753_streak_1.png 
+  Time: 2022-05-29 00:49:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  COSMOS 1823 (17535) -- with 67.5%
+
+Streaklet No. 7/26: 
+  File: 005_2022-05-29_004927_A_DSC_0754_streak_1.png 
+  Time: 2022-05-29 00:49:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  IRIDIUM 29 (24944) -- with 33.3%
+
+Streaklet No. 8/26: 
+  File: 005_2022-05-29_004927_A_DSC_0754_streak_2.png 
+  Time: 2022-05-29 00:49:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  IRIDIUM 29 (24944) -- with 33.4%
+
+Streaklet No. 9/26: 
+  File: 005_2022-05-29_010942_A_DSC_0835_streak_1.png 
+  Time: 2022-05-29 01:09:42 UTC/BST-1
+    0 satellite(s) identified in image to test against
+    The trail in this image is cut off by the bounds of the .NEF image
+ --- No satellites in image --- 
+
+Streaklet No. 10/26: 
+  File: 005_2022-05-29_011112_A_DSC_0841_streak_1.png 
+  Time: 2022-05-29 01:11:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-14 R/B (14033) -- with 33.3%
+
+Streaklet No. 11/26: 
+  File: 005_2022-05-29_011127_A_DSC_0842_streak_1.png 
+  Time: 2022-05-29 01:11:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-14 R/B (14033) -- with 35.4%
+
+Streaklet No. 12/26: 
+  File: 005_2022-05-29_012842_A_DSC_0911_streak_1.png 
+  Time: 2022-05-29 01:28:42 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  DELTA 2 R/B (26622) -- with 34.9%
+
+Streaklet No. 13/26: 
+  File: 005_2022-05-29_012857_A_DSC_0912_streak_1.png 
+  Time: 2022-05-29 01:28:57 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  DELTA 2 R/B (26622) -- with 67.4%
+
+Streaklet No. 14/26: 
+  File: 005_2022-05-29_013157_A_DSC_0924_streak_1.png 
+  Time: 2022-05-29 01:31:57 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-8 R/B (6966) -- with 33.3%
+
+Streaklet No. 15/26: 
+  File: 005_2022-05-29_013327_A_DSC_0930_streak_1.png 
+  Time: 2022-05-29 01:33:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-8 R/B (4139) -- with 67.8%
+
+Streaklet No. 16/26: 
+  File: 005_2022-05-29_013357_A_DSC_0932_streak_1.png 
+  Time: 2022-05-29 01:33:57 UTC/BST-1
+    0 satellite(s) identified in image to test against
+    The trail in this image is cut off by the bounds of the .NEF image
+ --- No satellites in image --- 
+
+Streaklet No. 17/26: 
+  File: 005_2022-05-29_013412_A_DSC_0933_streak_1.png 
+  Time: 2022-05-29 01:34:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-14 R/B (19574) -- with 68.0%
+
+Streaklet No. 18/26: 
+  File: 005_2022-05-29_013427_A_DSC_0934_streak_1.png 
+  Time: 2022-05-29 01:34:27 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-14 R/B (19574) -- with 67.4%
+
+Streaklet No. 19/26: 
+  File: 005_2022-05-29_015342_A_DSC_1011_streak_1.png 
+  Time: 2022-05-29 01:53:42 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-3 R/B (8800) -- with 66.4%
+
+Streaklet No. 20/26: 
+  File: 005_2022-05-29_015357_A_DSC_1012_streak_1.png 
+  Time: 2022-05-29 01:53:57 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-3 R/B (8800) -- with 67.6%
+
+Streaklet No. 21/26: 
+  File: 005_2022-05-29_015412_A_DSC_1013_streak_1.png 
+  Time: 2022-05-29 01:54:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-3 R/B (8800) -- with 37.2%
+
+Streaklet No. 22/26: 
+  File: 005_2022-05-29_015557_A_DSC_1020_streak_1.png 
+  Time: 2022-05-29 01:55:57 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  THOR AGENA D R/B (733) -- with 67.6%
+
+Streaklet No. 23/26: 
+  File: 005_2022-05-29_015612_A_DSC_1021_streak_1.png 
+  Time: 2022-05-29 01:56:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  THOR AGENA D R/B (733) -- with 67.1%
+
+Streaklet No. 24/26: 
+  File: 005_2022-05-29_015712_A_DSC_1025_streak_1.png 
+  Time: 2022-05-29 01:57:12 UTC/BST-1
+    0 satellite(s) identified in image to test against
+ --- No satellites in image --- 
+
+Streaklet No. 25/26: 
+  File: 005_2022-05-29_015712_A_DSC_1025_streak_2.png 
+  Time: 2022-05-29 01:57:12 UTC/BST-1
+    1 satellite(s) identified in image to test against
+  SL-14 R/B (20306) -- with 33.2%
+
+Streaklet No. 26/26: 
+  File: 005_2022-05-29_015727_A_DSC_1026_streak_1.png 
+  Time: 2022-05-29 01:57:27 UTC/BST-1
+    2 satellite(s) identified in image to test against
+  SL-14 R/B (20306) -- with 35.3%
+Number of streaklets with possible matches found: 22 / 26
