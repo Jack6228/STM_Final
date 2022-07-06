@@ -1,6 +1,7 @@
 # 'Trail' is sometimes used in place of 'streaklet' but both have the same meaning in this code
 
 from os import listdir, remove
+from sys import argv
 import pandas as pd
 from scipy.stats import norm
 from numpy import unique, array, sqrt, allclose, arange, where, vstack, average
@@ -139,19 +140,18 @@ class IdentifySatellites(object):
     Run() is first function to be called
     """
 
-    def __init__(self):
+    def __init__(self, date, path, img_path, wcs_path):
         """
         Initialises main variables for running
         """
         print("---- Initialising variables...")
-
         # ----------------------------------------------------------------------------------------------------
         # ----------------------------------------------------------------------------------------------------
         # User defined variables - will be linked to settings_template.py when integrated to Cuillin (from settings import *)
-        self.date = "2022-05-28" # date of images to be processed
-        self.path = "/home/s1901554/Documents/SpaceTrafficManagement/"+self.date # path to folder (e.g. in khaba) where this date's folder is stored
-        self.image_path = self.path+"/Images" # change folder names to image folder (detected_streaks) and wcs (wcs) folder within self.path folder
-        self.wcs_path = self.path+"/Fits"
+        self.date = date # date of images to be processed
+        self.path = path # path to folder (e.g. in khaba) where this date's folder is stored
+        self.image_path = img_path# change folder names to image folder (detected_streaks) and wcs (wcs) folder within self.path folder
+        self.wcs_path = wcs_path
         # ----------------------------------------------------------------------------------------------------
         # Variables which are constant for the ROE camera but the option to change them here (i.e. if camera was different)
         self.exposure_time = 5 # seconds
@@ -540,8 +540,18 @@ class IdentifySatellites(object):
         out = pd.DataFrame(data=self.output_file, columns=["Photo#","Filename","Satellite","NORAD_CAT_ID","Likelihood","Distance","Length","Angle","Cutoff","RADecPoint1","RADecPoint2","TLE1","TLE2"])
         out.to_csv("output_data_"+str(self.date)+".csv", index=False)
 
+# Gets input parameters from terminal prompt
+# Example terminal input:
+#     python identification.py "2022-05-28" "/home/s1901554/Documents/SpaceTrafficManagement/" "/Images" "/Fits"
+# See section 5.1 of documentation for in-depth details
+if __name__ == "__main__":
+    date = str(argv[1])
+    path = str(argv[2])+date
+    image_path = path+str(argv[3])
+    wcs_path = path+str(argv[4])
+
 # Initialises classes
-IS = IdentifySatellites()
+IS = IdentifySatellites(date, path, image_path, wcs_path)
 DF = DisplayFigure()
 
 # Runs identification class through main Run() function
