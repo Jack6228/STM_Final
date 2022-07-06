@@ -1,6 +1,6 @@
 # 'Trail' is sometimes used in place of 'streaklet' but both have the same meaning in this code
 
-from os import listdir
+from os import listdir, remove
 import pandas as pd
 from scipy.stats import norm
 from numpy import unique, array, sqrt, allclose, arange, where, vstack, average
@@ -132,7 +132,6 @@ class DisplayFigure(object):
         plt.title(filename)
         if cutoff == True: plt.savefig("#"+str(xx+1)+"_cutoff.png",facecolor='w')
         else: plt.savefig("#"+str(xx+1)+".png",facecolor='w')
-        # plt.show()
 
 class IdentifySatellites(object):
     """
@@ -146,16 +145,20 @@ class IdentifySatellites(object):
         """
         print("---- Initialising variables...")
 
+        # ----------------------------------------------------------------------------------------------------
+        # ----------------------------------------------------------------------------------------------------
         # User defined variables - will be linked to settings_template.py when integrated to Cuillin (from settings import *)
-        self.exposure_time = 5 # seconds
-        self.nef_h, self.nef_w = 4912, 7360 # height and width of .NEF images -- can be automatically determined if given path to one of the .NEF files
         self.date = "2022-05-28" # date of images to be processed
         self.path = "/home/s1901554/Documents/SpaceTrafficManagement/"+self.date # path to folder (e.g. in khaba) where this date's folder is stored
-        self.image_path = self.path+"/Images" # change folder names to image folder (detected_streaks) and wcs (wcs) folder
+        self.image_path = self.path+"/Images" # change folder names to image folder (detected_streaks) and wcs (wcs) folder within self.path folder
         self.wcs_path = self.path+"/Fits"
-        # self.path = r"C:\Users\jackl\Documents\Python\SatelliteProject\\"+self.date
-        # self.image_path = self.path+"\Images"
-        # self.wcs_path = self.path+"\Fits"
+        # ----------------------------------------------------------------------------------------------------
+        # Variables which are constant for the ROE camera but the option to change them here (i.e. if camera was different)
+        self.exposure_time = 5 # seconds
+        self.nef_h, self.nef_w = 4912, 7360 # height and width of .NEF images -- can be automatically determined if given path to one of the .NEF files
+        lat, long, elevation = 55.923056, -3.187778, 146    # Latitude, longitude and altitude (here for the camera @ Royal Observatory, Edinburgh)
+        # ----------------------------------------------------------------------------------------------------
+        # ----------------------------------------------------------------------------------------------------
 
         # Dataframe into which results of all streaklet identification attempts will be stored
         self.output_file = []
@@ -163,9 +166,8 @@ class IdentifySatellites(object):
         # Loads streak_data.txt file to get positions and times of streaklet start & end points
         self.ProcessStreaksTXT()
 
-        # Initialises skyfield variables and observing position
+        # Initialises skyfield variables from observing position
         self.ts = load.timescale()
-        lat, long, elevation = 55.923056, -3.187778, 146    # Royal Observatory, Edinburgh
         self.bluffton = wgs84.latlon(lat,long,elevation)
 
         # Gets TLEs from catalog at space-track.org
@@ -207,7 +209,7 @@ class IdentifySatellites(object):
 
         # Loops back x days into the past from the above date to download catalogues from space-track
         days_back = 14
-        print("       Loading space-track catalogues")
+        print("       Loading space-track catalogues:")
         for i in range(-1,days_back):
             # Builds a string representing the date range of the query to be sent to space-track's API
             #     Format: YYYY-mm-dd--YYYY-mm-dd
@@ -225,11 +227,11 @@ class IdentifySatellites(object):
 
             if cat_file != []:
                 # If found an existing catalog, loads and appends to tle_data
-                print("         Found pre-existing catalog from Space-Track.org      {}".format(date_query))
+                print("         Found pre-existing catalogue from Space-Track.org      {}".format(date_query))
                 tle_data = pd.concat([tle_data, pd.read_csv("ST_Catalog_"+date_query+".csv", keep_default_na=False)])
             else:
                 # Otherwise uses the spacetrack package to download data from space-track
-                print("         API-accessing Space-Track.org data for this date     {}".format(date_query))
+                print("         API-accessing space-track.org data for this date     {}".format(date_query))
                 st = SpaceTrackClient(identity='jackleesmith100@gmail.com', password='Rcaw5dHxNzZXzaV')
                 data = st.gp_history(creation_date=date_query,format='csv')
 
@@ -237,10 +239,23 @@ class IdentifySatellites(object):
                 data = data.replace('"', '')
                 # [:-1] removes final element of list since the csv string ends with \n. [1:] separates headers into actual headers of df
                 cat = pd.DataFrame([x.split(',') for x in data.split('\n')[1:-1]], columns=[x for x in data.split('\n')[0].split(',')])
-                # cat = cat.convert_dtypes()
                 # Saves dataframe to file for future use and appends to tle_data
                 cat.to_csv("ST_Catalog_"+date_query+".csv", index=False)
-                tle_data = pd.concat([tle_data, pd.read_csv("ST_Catalog_"+date_query+".csv")])
+                tle_data = pd.concat([tle_data, pd.read_csv("ST_Catalog_"+date_query+".csv", keep_default_na=False)]).reset_index(drop=True)
+
+        print("      ## Catalogues loaded")
+
+        # Deletes previously downloaded catalogues for dates which are greater than 21 days in the past from the current date being processed
+        date_to_delete_before = date - timedelta(days = 21)
+        print("      Purging old catalogues:")
+        for f in files:
+            if "ST_Catalog_" in f:
+                file_date = datetime.strptime(f[11:21], "%Y-%m-%d")
+                if file_date < date_to_delete_before:
+                    print("        {}".format(f))
+                    remove(f)
+        print("      ## Catalogues purged where neccessary")
+
 
         # Removes objects from the catalogue which have already decayed from orbit
         tle_data = tle_data[tle_data['DECAY_DATE']=='']
