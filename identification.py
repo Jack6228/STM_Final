@@ -553,7 +553,7 @@ if __name__ == "__main__":
 
 # Initialises classes
 IS = IdentifySatellites(date, path, image_path, wcs_path)
-DF = DisplayFigure()
+# DF = DisplayFigure()
 
 # Runs identification class through main Run() function
 IS.Run()
