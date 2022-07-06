@@ -17,6 +17,4 @@ Prior to this, a few variables must be configured within the __init__() function
 
 // These could be put into the settings file from the previous pipeline instead of being defined here if so wished.
 
-Note:: Test data here based on prior code pipeline before bug fix for undetected streaklets due to streaklet length-to-width ratio being too high.
-        
-        Different results may be obtained if the original, un-processed data from the 28th May 2022 is re-processed by the updated code pipeline.
+Note:: Test data here based on prior code pipeline before bug fix for undetected streaklets due to streaklet length-to-width ratio being too high. Different results may be obtained if the original, un-processed data from the 28th May 2022 is re-processed by the updated code pipeline.
