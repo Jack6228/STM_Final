@@ -3,9 +3,11 @@ Final Code &amp; Docs for STM Satellite Identification Project
 
 To implement into Cuillin pipeline:
 
-To run the code, the identification.py file needs only to be ran from the terminal/equivalent, e.g: 
+To run the code, the identification.py file needs only to be ran from the terminal/equivalent with four parameters, e.g: 
 
-    $ python identification.py
+    $ python identification.py "2022-05-28" "/home/s1901554/Documents/SpaceTrafficManagement/" "/Images" "/Fits"
+    
+See Section 5.1 of the documentation for details on the parameters and more information on running the file.
 
 Prior to this, a few variables must be configured within the \_\_init\_\_() function of the IdentifySatellites() class:
 
