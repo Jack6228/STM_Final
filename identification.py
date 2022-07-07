@@ -4,7 +4,7 @@ from os import listdir, remove
 from sys import argv
 import pandas as pd
 from scipy.stats import norm
-from numpy import unique, array, sqrt, allclose, arange, where, vstack, average
+from numpy import unique, array, sqrt, allclose, arange, where, vstack, average, around
 from warnings import catch_warnings, simplefilter, filterwarnings
 from skyfield.api import load, wgs84, utc, EarthSatellite
 from math import degrees, atan
@@ -23,8 +23,6 @@ pd.options.mode.chained_assignment = None
 #    thus the error can be safely ignored to clean the run logs
 filterwarnings('ignore', '.*invalid value encountered in remainder.*', )
 
-# # Needed if useing DisplayFigure() Class:
-# import matplotlib.pyplot as plt
 
 class DisplayFigure(object):
     """
@@ -158,6 +156,8 @@ class IdentifySatellites(object):
         self.exposure_time = is_exposure_time
         self.nef_h, self.nef_w = is_nef_h, is_nef_w
         lat, long, elevation = is_lat, is_long, is_elevation
+        self.spacetrack_email = is_spacetrack_email
+        self.spacetrack_password = is_spacetrack_password
         # ----------------------------------------------------------------------------------------------------
         # ----------------------------------------------------------------------------------------------------
 
@@ -233,7 +233,7 @@ class IdentifySatellites(object):
             else:
                 # Otherwise uses the spacetrack package to download data from space-track
                 print("         API-accessing space-track.org data for this date     {}".format(date_query))
-                st = SpaceTrackClient(identity='jackleesmith100@gmail.com', password='Rcaw5dHxNzZXzaV')
+                st = SpaceTrackClient(identity=self.spacetrack_email, password=self.spacetrack_password)
                 data = st.gp_history(creation_date=date_query,format='csv')
 
                 # Formats data correctly so it can be stored in a pandas dataframe
@@ -489,13 +489,13 @@ class IdentifySatellites(object):
                     ,self.streaklets["Filename"][i]          # Filename
                     ,name                           # Satellite name
                     ,id                             # Satellite ID
-                    ,round(certainty,1)             # Likelihood
-                    ,results['Distance'][0]
-                    ,results['Length'][0]
-                    ,results['Angle'][0]
+                    ,round(certainty,2)             # Likelihood
+                    ,round(results['Distance'][0])
+                    ,round(results['Length'][0])
+                    ,round(results['Angle'][0])
                     ,cutoff                         # True / False
-                    ,point1                         # First point (in time)
-                    ,point2                         # Second point
+                    ,around(point1, 4)                         # First point (in time)
+                    ,around(point2, 4)                         # Second point
                     ,results['TLE1'][0]
                     ,results['TLE2'][0]])
 
@@ -553,6 +553,8 @@ if __name__ == "__main__":
 
 # Initialises classes
 IS = IdentifySatellites(date, path, image_path, wcs_path)
+# # Uncomment both if useing DisplayFigure() Class:
+# import matplotlib.pyplot as plt
 # DF = DisplayFigure()
 
 # Runs identification class through main Run() function
