@@ -553,7 +553,7 @@ if __name__ == "__main__":
 
 # Initialises classes
 IS = IdentifySatellites(date, path, image_path, wcs_path)
-# # Uncomment both if useing DisplayFigure() Class:
+# # Uncomment both if useing DisplayFigure() Class: Also uncomment line 503
 # import matplotlib.pyplot as plt
 # DF = DisplayFigure()
 
