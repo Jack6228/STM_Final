@@ -4,3 +4,4 @@ is_nef_h, is_nef_w = 4912, 7360 # height and width of .NEF images -- can be auto
 is_lat, is_long, is_elevation = 55.923056, -3.187778, 146    # Latitude, longitude and altitude (here for the camera @ Royal Observatory, Edinburgh)
 is_spacetrack_email = 'my.email@email.com'
 is_spacetrack_password = 'my#password'
+is_shutter_offset = 1.85 # Approximate best value for ROE camera
