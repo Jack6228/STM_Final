@@ -158,6 +158,7 @@ class IdentifySatellites(object):
         lat, long, elevation = is_lat, is_long, is_elevation
         self.spacetrack_email = is_spacetrack_email
         self.spacetrack_password = is_spacetrack_password
+        self.shutter_offset = is_shutter_offset
         # ----------------------------------------------------------------------------------------------------
         # ----------------------------------------------------------------------------------------------------
 
@@ -315,11 +316,9 @@ class IdentifySatellites(object):
         # Lists of [YYYY, MM, DD, HH, MM, SS] for start and end times of shutter being open
         start = date+list(map(int, streaklet_data[9].strftime('%H,%M,%S').split(",")))
         end = date+list(map(int, streaklet_data[10].strftime('%H,%M,%S').split(",")))
-        # Optional parameter to allow for a fudge factor or offset in the shutter trigger
-        shutter_offset = 0#1.85
 
         # Creates a range of times from start to end of exposure of this image at 1 second intervals
-        seconds_range = arange(start[-1]+shutter_offset, start[-1]+(datetime(*end)-datetime(*start)).total_seconds()+1+shutter_offset)
+        seconds_range = arange(start[-1]+self.shutter_offset, start[-1]+(datetime(*end)-datetime(*start)).total_seconds()+1+self.shutter_offset)
         intervals = self.ts.utc(*start[:5],seconds_range)
 
         # Co-ordinates of start & end of trail in RA Dec (don't reflect which point came first in time)
