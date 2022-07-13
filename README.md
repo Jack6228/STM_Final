@@ -5,13 +5,13 @@ How to Use
         
 1) To install dependencies:
 
-    $ python3 -m pip install --user pandas
+        $ python3 -m pip install --user pandas
     
-    $ python3 -m pip install --user skyfield
+        $ python3 -m pip install --user skyfield
     
-    $ python3 -m pip install --user astropy
+        $ python3 -m pip install --user astropy
     
-    $ python3 -m pip install --user spacetrack
+        $ python3 -m pip install --user spacetrack
 
 2) Running the code
           
