@@ -399,13 +399,13 @@ def GetDirecOrder(mini, i):
     mini = mini.sort_values(by=['Time'])
     for h in range(len(mini)):
         start = datetime.strptime(mini['Filename'].iloc[h][4:21],'%Y-%m-%d_%H%M%S')
-        point = list(map(str.strip, mini['RADecPoint1'].iloc[h].strip('][').replace('"', '').split(',')))
-        point = [float(n) for n in point]
+        point = list(map(str.strip, mini['RADecPoint1'].iloc[h].strip('][').replace('"', '').split('  ')))
+        point = [float(n) for n in point if n != '']
         ras.append(point[0])
         decs.append(point[1])
         times.append(start)
-        point = list(map(str.strip, mini['RADecPoint2'].iloc[h].strip('][').replace('"', '').split(',')))
-        point = [float(n) for n in point]
+        point = list(map(str.strip, mini['RADecPoint2'].iloc[h].strip('][').replace('"', '').split('  ')))
+        point = [float(n) for n in point if n != '']
         end = start + timedelta(seconds=5)
         ras.append(point[0])
         decs.append(point[1])
@@ -508,10 +508,7 @@ def ElementsPrediction(elems, satnum, epoch, bstar, ndot, nddot, no_kozai, exp_t
         ras.append(ra._degrees)
         decs.append(dec._degrees)
     print(ras)
-    input(decs)
-
-def dot(a,b):
-    return a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+    print(decs)
 
 def GetSemiMajorAxis(exp_ra_decs, exp_times):
     arr = np.array(exp_ra_decs).reshape(2, int(len(exp_ra_decs)/2))
@@ -751,7 +748,11 @@ def GetAllObservations():
             a = pd.read_csv("/home/s1901554/Documents/SpaceTrafficManagement/"+i)
             a['Date'] = i[12:-4]
             b = pd.concat([b,a])
+            
+    #### SHOULD ONLY USE ONE DATE OF DATA AT A TIME!!!    --------------------------------------------------------------------------------------
     b = b[b['Date']=="2022-05-11"]
+    #### ---------------------------------------------------------------------------------------------------------------------------------------
+    
     fails = b[b['Satellite'].astype(str)=="FAILED"].reset_index(drop=True)
     sucesses = b[b['Satellite'].astype(str)!="FAILED"].reset_index(drop=True)
 
@@ -760,49 +761,50 @@ def GetAllObservations():
         mini = sucesses[sucesses['NORAD_CAT_ID']==i]
         if len(mini) >= 3:
             ras, decs, times = GetDirecOrder(mini, i)
-            elems, cost = NewFunc(ras, decs, times, mini)
-            if len(elems) == 6 and cost <= 500:
-                print("Orbit fit success for {} ({}) with cost {}".format(mini['Satellite'].iloc[0],int(mini['NORAD_CAT_ID'].iloc[0]),cost))
-                epoch = Time(times[0])
-                mn = elems
-                if mn[2] > 180:
-                    while mn[2] > 180:
-                        mn[2] -= 180
-                elif mn[2] < 0:
-                    while mn[2] < 0:
-                        mn[2] += 180
-                orb2 = Orbit.from_classical(Earth, mn[0]*u.km, mn[1]*u.one, mn[2]*u.deg, mn[3]*u.deg, mn[4]*u.deg, mn[5]*u.deg, epoch)
-                fig = frame.plot(orb2, label="{} ({})".format(mini['Satellite'].iloc[0],mini['NORAD_CAT_ID'].iloc[0]))
-                yes += 1
-                df = pd.read_csv("/home/s1901554/Documents/SpaceTrafficManagement/output_data_2022-05-10.csv")
-                df = df[df['NORAD_CAT_ID'] == 1807]
-                input(df)
-                print(df['RADecPoint1'],df['RADecPoint2'])
-                tle1 = df['TLE1'].iloc[0]
-                tle2 = df['TLE2'].iloc[0]
-                satnum = df['NORAD_CAT_ID'].iloc[0]
-                date_time = datetime.strptime(df['Filename'].iloc[0][4:21],"%Y-%m-%d_%H%M%S")
-                init_epoch = [1949, 12, 31, 0, 0, 0]
-                diff = date_time - datetime(*init_epoch)
-                epoch = diff.days + (diff.seconds/(3600*24))
-                bstar = tle1[53:61]
-                bstar = bstar.split("-")
-                if bstar[0] == '':
-                    bstar = float("-."+bstar[1].strip())*10**(-1*float(bstar[2]))
-                else:
-                    bstar = float("."+bstar[0].strip())*10**(-1*float(bstar[1]))
-                ndot = tle1[33:43]
-                ndot = float(ndot)
-                nddot = tle1[44:52]
-                nddot = nddot.split("-")
-                nddot = float("."+nddot[0].strip())*10**(-1*float(nddot[1]))
-                no_kozai = float(tle2[52:63])/229.183
-                datetime2 = date_time + timedelta(seconds=5)
-                exp_times=[]
-                exp_times.append([date_time.year, date_time.month, date_time.day, date_time.hour, date_time.minute, date_time.second])
-                exp_times.append([datetime2.year, datetime2.month, datetime2.day, datetime2.hour, datetime2.minute, datetime2.second])
-                ElementsPrediction(elems, satnum, epoch, bstar, ndot, nddot, no_kozai, exp_times)
-
+            try:
+                elems, cost = NewFunc(ras, decs, times, mini)
+                if len(elems) == 6 and cost <= 500:
+                    print("Orbit fit success for {} ({}) with cost {}".format(mini['Satellite'].iloc[0],int(mini['NORAD_CAT_ID'].iloc[0]),cost))
+                    epoch = Time(times[0])
+                    mn = elems
+                    if mn[2] > 180:
+                        while mn[2] > 180:
+                            mn[2] -= 180
+                    elif mn[2] < 0:
+                        while mn[2] < 0:
+                            mn[2] += 180
+                    orb2 = Orbit.from_classical(Earth, mn[0]*u.km, mn[1]*u.one, mn[2]*u.deg, mn[3]*u.deg, mn[4]*u.deg, mn[5]*u.deg, epoch)
+                    fig = frame.plot(orb2, label="{} ({})".format(mini['Satellite'].iloc[0],mini['NORAD_CAT_ID'].iloc[0]))
+                    yes += 1
+                    # df = pd.read_csv("/home/s1901554/Documents/SpaceTrafficManagement/output_data_2022-05-10.csv")
+                    # df = df[df['NORAD_CAT_ID'] == 1807]
+                    # print(df['RADecPoint1'],df['RADecPoint2'])
+                    # tle1 = df['TLE1'].iloc[0]
+                    # tle2 = df['TLE2'].iloc[0]
+                    # satnum = df['NORAD_CAT_ID'].iloc[0]
+                    # date_time = datetime.strptime(df['Filename'].iloc[0][4:21],"%Y-%m-%d_%H%M%S")
+                    # init_epoch = [1949, 12, 31, 0, 0, 0]
+                    # diff = date_time - datetime(*init_epoch)
+                    # epoch = diff.days + (diff.seconds/(3600*24))
+                    # bstar = tle1[53:61]
+                    # bstar = bstar.split("-")
+                    # if bstar[0] == '':
+                    #     bstar = float("-."+bstar[1].strip())*10**(-1*float(bstar[2]))
+                    # else:
+                    #     bstar = float("."+bstar[0].strip())*10**(-1*float(bstar[1]))
+                    # ndot = tle1[33:43]
+                    # ndot = float(ndot)
+                    # nddot = tle1[44:52]
+                    # nddot = nddot.split("-")
+                    # nddot = float("."+nddot[0].strip())*10**(-1*float(nddot[1]))
+                    # no_kozai = float(tle2[52:63])/229.183
+                    # datetime2 = date_time + timedelta(seconds=5)
+                    # exp_times=[]
+                    # exp_times.append([date_time.year, date_time.month, date_time.day, date_time.hour, date_time.minute, date_time.second])
+                    # exp_times.append([datetime2.year, datetime2.month, datetime2.day, datetime2.hour, datetime2.minute, datetime2.second])
+                    # ElementsPrediction(elems, satnum, epoch, bstar, ndot, nddot, no_kozai, exp_times)
+            except:
+                print("failed residuals?")
             else:
                 print("Orbit fit failed for {} ({}) with cost {}".format(mini['Satellite'].iloc[0],int(mini['NORAD_CAT_ID'].iloc[0]),cost))
                 no += 1
