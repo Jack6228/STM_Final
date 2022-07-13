@@ -1,10 +1,8 @@
-from turtle import fillcolor
 import rawpy
 from astropy.io import fits
 import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 
+# Change filename and/or path here
 filename = "NEFs/005_2022-05-29_013427_A_DSC_0934.NEF"
 filename_clean = filename[:-3]
 
