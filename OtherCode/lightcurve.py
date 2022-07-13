@@ -1,5 +1,3 @@
-from audioop import maxpp
-from multiprocessing.sharedctypes import RawValue
 import rawpy, os
 import matplotlib.pyplot as plt
 import pandas as pd, numpy as np
@@ -25,6 +23,7 @@ def legend_without_duplicate_labels(ax):
     ax.legend(*zip(*unique))
     return len(unique)
 
+# Change date here (1/2)
 output_data = pd.read_csv("output_data_2022-05-28.csv")
 for i in range(len(output_data)):
     output_data['Filename'].iloc[i] = output_data['Filename'].iloc[i][:-13] + '.NEF'
@@ -34,6 +33,7 @@ for i in range(len(output_data)):
     output_data["start"].iloc[i] = datetime.strptime(output_data['Filename'].iloc[i][4:21],'%Y-%m-%d_%H%M%S')
     output_data["end"].iloc[i] = output_data["start"].iloc[i] + timedelta(seconds=exposure_time)
 
+# Change date here (2/2)
 streaks = pd.read_csv("2022-05-28/streaks_data.txt", header=None)
 streaks.columns = ['Filename','RA1','Dec1','x1','y1','RA2','Dec2','x2','y2']
 
