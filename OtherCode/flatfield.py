@@ -84,7 +84,7 @@ for f in files:
     # plt.imshow(g)
     # plt.gca().set_axis_off()
     # plt.savefig("G Channel Corrected", bbox_inches='tight')
-    # plt.imshow(b)
+    # plt.imshow(b) 
     # plt.gca().set_axis_off()
     # plt.savefig("B Channel Corrected", bbox_inches='tight')
 
